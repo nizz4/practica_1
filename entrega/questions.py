@@ -1,21 +1,29 @@
 import random
-words = [
-"python",
-"programa",
-"variable",
-"funcion",
-"bucle",
-"cadena",
-"entero",
-"lista",
-]
-word = random.choice(words)
+categorias = {"PROGRAMACION": ["python", "programa", "variable", "funcion", "bucle"],
+              "PAISES": ["argentina","chile","mexico","peru","uruguay","colombia"],
+              "FRUTAS": ["banana","manzana","sandia","naranja","durazno","kiwi"],
+              }
 guessed = []
 attempts = 6
 score = 0
 
 print("¡Bienvenido al Ahorcado!")
 print()
+print("Categorías disponibles: ") 
+for elem in categorias:
+    print(f'* {elem}')
+seleccion = input("\nElija una categoría antes de comenzar: ").upper()
+
+
+if seleccion in categorias:
+    word = random.choice(categorias[seleccion])
+else:
+    while seleccion not in categorias:
+         print(f"Categoría inexistente, elija otra: ")
+         seleccion = input().upper()
+    word = random.choice(categorias[seleccion])
+print(f'\n- Categoria seleccionada: {seleccion} -\n')
+
 
 while attempts > 0:
      # Mostrar progreso: letras adivinadas y guiones para las que faltan
@@ -33,7 +41,7 @@ while attempts > 0:
          break
      print(f"Intentos restantes: {attempts}")
      print(f"Letras usadas: {', '.join(guessed)}")
-     letter = input("Ingresá una letra: ")
+     letter = input("Ingresá una letra: ").lower()
      if letter.isalpha() and len(letter)==1:
          if letter in guessed:
             print("Ya usaste esa letra.")
